@@ -2,7 +2,7 @@
 
 from sys import argv
 
-from hgen_maplepy import main
+from genheader import main
 
 if __name__ == "__main__":
     main()
