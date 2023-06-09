@@ -21,8 +21,8 @@ build() {
 
 # Function to upload the package to the test PyPI repository
 upload() {
-	python3 -m twine upload dist/*
-	# python3 -m twine upload --repository testpypi dist/*
+	# python3 -m twine upload dist/*
+	python3 -m twine upload --repository testpypi dist/*
 }
 
 # Function to refresh dependencies and push the changes to the git repository
