@@ -1,17 +1,17 @@
 from argparse import ArgumentParser
 from pathlib import Path
 
-from hgen._version import __version__
+from hgen_maplepy._version import __version__
 
 from .utils import cstr
 
 
 def create_parser():
-    prog = "hgen"
+    prog = "hgen_maplepy"
     parser = ArgumentParser(
         prog=prog,
         usage=f"{prog} [-hv] [-r] -I header.h [path ...]",
-        description=cstr("green", "HGEN: Header prototype GENerator"),
+        description=cstr("green", "hgen_maplepy: Header prototype Generator (fixed by maplepy)"),
     )
     parser.add_argument(
         "-I",

@@ -2,9 +2,9 @@ from argparse import Namespace
 from pathlib import Path
 from sys import argv, stderr
 
-from hgen.injector import insert_prototypes
-from hgen.proto import get_prototypes
-from hgen.utils import create_parser, visualize
+from hgen_maplepy.injector import insert_prototypes
+from hgen_maplepy.proto import get_prototypes
+from hgen_maplepy.utils import create_parser, visualize
 
 
 def update_header_prototypes(args: Namespace):

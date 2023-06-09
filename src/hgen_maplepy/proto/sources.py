@@ -3,8 +3,8 @@
 from itertools import chain
 from pathlib import Path
 
-from hgen.proto import Protos
-from hgen.utils import TAB, cprint, cstr
+from hgen_maplepy.proto import Protos
+from hgen_maplepy.utils import TAB, cprint, cstr
 
 
 def _crawl_prototypes(src_path: Path) -> "list[Protos]":

@@ -2,7 +2,7 @@
 
 from pathlib import Path
 
-from hgen.utils.colors import cstr
+from hgen_maplepy.utils.colors import cstr
 
 TAB = "\t"
 

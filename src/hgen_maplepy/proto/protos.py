@@ -5,7 +5,7 @@ from dataclasses import dataclass, field
 from functools import cached_property
 from pathlib import Path
 
-from hgen.utils import RegexRules, cstr, get_lines_from
+from hgen_maplepy.utils import RegexRules, cstr, get_lines_from
 from termcolor import cprint
 
 # _NAME_HEADER = "/*\n** < {filename} > */"
