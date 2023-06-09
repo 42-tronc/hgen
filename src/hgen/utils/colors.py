@@ -2,9 +2,7 @@
 
 from dataclasses import dataclass
 
-# ===== Constant Values =====
-
-
+# Dataclass to store color codes
 @dataclass(frozen=True)
 class ColorCodes:
     RED = "\033[91m"
@@ -20,12 +18,11 @@ class ColorCodes:
     END = "\033[0m"
 
 
-# ===== Functions =====
-
-
+# Function to apply color to a string
 def cstr(color: str, string: str):
     return f"{getattr(ColorCodes, color.upper())}{string}{ColorCodes.END}"
 
 
+# Function to print colored string
 def cprint(color: str, string: str):
     print(cstr(color, string))

@@ -20,10 +20,19 @@ def version_up(file: ConfigParser, update: Version):
 
 
 if __name__ == "__main__":
+    # Determine the version component to update (Major, Minor, or Patch)
     to_update = Version[argv[1]] if len(argv[1:]) else Version.Patch
+
+    # Read the setup.cfg file
     file = ConfigParser()
     file.read("setup.cfg")
+
+    # Generate the new version
     new_ver = version_up(file, to_update)
-    print(new_ver) # to send to STDOUT
+
+    # Print the new version to STDOUT
+    print(new_ver)
+
+    # Update the version in the setup.cfg file
     file.set("metadata", "version", new_ver)
     file.write(open("setup.cfg", "w"))

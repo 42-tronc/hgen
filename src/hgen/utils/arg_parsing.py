@@ -10,19 +10,8 @@ def create_parser():
     prog = "hgen"
     parser = ArgumentParser(
         prog=prog,
-        usage=f"{prog} [-hv] -I header.h src [src ...] [-c path]",
+        usage=f"{prog} [-hv] [-r] -I header.h [path ...]",
         description=cstr("green", "HGEN: Header prototype GENerator"),
-    )
-    parser.add_argument(
-        "sources",
-        nargs="+",
-        type=Path,
-        default=Path(".") / "src",
-        help=(
-            "list of source files to search for prototypes. "
-            "either directory or file works"
-        ),
-        metavar="",
     )
     parser.add_argument(
         "-I",
@@ -34,25 +23,26 @@ def create_parser():
         metavar="",
     )
     parser.add_argument(
-        "-c",
-        "--common",
+        "-r",
+        "--recursive",
+        action="store_true",
+        help="Recursively search for source files in subfolders",
+    )
+    parser.add_argument(
+        "paths",
+        nargs="+",
         type=Path,
-        default=Path(),
-        help="Path shared by both src and dest",
+        default=Path(".") / "src",
+        help=(
+            "List of paths to search for source files. "
+            "Either directory or file works"
+        ),
         metavar="",
     )
     parser.add_argument(
         "-v", "--version", action="version", version=__version__
     )
 
-    # parser.add_argument(
-    #     "-q",
-    #     "--quiet",
-    #     type=bool,
-    #     default=False,
-    #     help="Whether to suppress output (defualt:false)",
-    #     metavar="",
-    # )
     return parser
 
 

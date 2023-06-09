@@ -13,11 +13,12 @@ def _crawl_prototypes(src_path: Path) -> "list[Protos]":
         try:
             target = Protos(src)
             res = f"(x{len(target)})"
-            # return target
+            # Append the Protos instance to the results list
             results.append(target)
         except ValueError:
             status, res = "yellow", "none"
         finally:
+            # Print the status and file name
             print(f"{cstr(status, f'{res} in')} {cstr('blue', src.name)}")
 
     def checked(results: "list[Protos]"):
@@ -31,20 +32,20 @@ def _crawl_prototypes(src_path: Path) -> "list[Protos]":
         return results
 
     results: list[Protos] = []
+    # Print the source path in magenta color
     cprint("magenta", f">> from {src_path}")
 
     if not src_path.is_dir():
         crawl_file(src_path)
         return checked(results)
 
-    for src in sorted(src_path.glob("*.c")):
+    for src in sorted(src_path.glob("**/*.c")):
         crawl_file(src)
 
     return checked(results)
 
 
-# this is the dirtiest loop i've ever laid my hands on.
-# but it works.
+# This function aligns the indentation of the prototypes
 def _align_protos_indentation(protolist: "list[Protos]"):
     def before_len(proto):
         return len(proto.split(TAB)[0])
@@ -58,15 +59,23 @@ def _align_protos_indentation(protolist: "list[Protos]"):
         return result + 4  # tabs
 
     def in_loop():
-        types, funcname_params = proto.split(TAB)
-        funcname, param = funcname_params.split("(")
-        params = param.split(", ")
+        parts = proto.split("(")
+        if len(parts) < 2:
+            return [proto]
+
+        funcname_params = parts[0]
+        params = parts[1].rstrip(")").split(", ")
+
+        funcname_parts = funcname_params.rsplit(" ", maxsplit=1)
+        if len(funcname_parts) < 2:
+            return [proto]
+
+        types, funcname = funcname_parts
 
         to_pad = longest // 4 - before_len(proto) // 4
         nl_tabs = TAB * (1 + len(types) // 4 + to_pad)
 
         result = [f"{types}{TAB * to_pad}{funcname}("]
-        # print(result)
         i = 0
         while True:
             is_first = True
@@ -83,16 +92,24 @@ def _align_protos_indentation(protolist: "list[Protos]"):
                 result.append(nl_tabs)
             else:
                 break
+
+        # Add a condition to handle #endif
+        if "endif" in proto:
+            result.append("")
+
         return result
 
     longest = get_longest_prototype_len()
 
     for container in protolist:
-        # print(container)
         results = []
         for proto in container:
             result = in_loop()
             results.append("\n".join(result))
+
+        # Add a newline before the last prototype in the container
+        if results:
+            results[-1] += "\n"
 
         container.prototypes = results
 

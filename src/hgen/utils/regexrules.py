@@ -3,6 +3,7 @@
 from re import IGNORECASE, compile
 
 
+# Function to create a regular expression pattern for flagged comments
 def _make_flagged_comment_regex(which):
     COMMENT_BEGIN = r"[/][/*].*"
     return compile(rf"{COMMENT_BEGIN}{which}", IGNORECASE)
