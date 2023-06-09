@@ -1,4 +1,4 @@
-# hgen
+# genheader
 
 ## Introduction
 
@@ -6,26 +6,16 @@
 
 Injects c function prototypes(BSD-style) into header.
 
-limitations
-- breaks when function does not work with norminette
-- that means a function must not have any whitespace before its return type
-- and exactly one tab must seperate its return type and name
-
 ## Usage
 
-`hgen [-h] -I header.h src.c [src/ ...] [-c path]`
+`genheader [-h] -I header.h [dir/ ... file.c]`
 
-your header should have flags that
+You need to have a .h file with
 
-- begins with: `@func` or `@function(s)` at your comment
-- ends with: `#endif` or `@end` or multiple `=` (ex:`== some identifier ==`)
+- A line comment containing: `@functions` or `@func`
+- End with `#endif` or `@end`
 
 ### examples
-
-```c
-//	@func
-//	@end
-```
 
 ```c
 #ifndef HEAD_H
@@ -35,9 +25,7 @@ your header should have flags that
 #endif
 ```
 
-## Plans
-
-- refactors
-- json based configuration
-- support K&R style function definitions
-- support multiline function definitions
+```c
+//	@func
+//	@end
+```
